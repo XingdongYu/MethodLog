@@ -102,8 +102,10 @@ logConfig.setLogDelegate(new CustomLog())
 
 输出格式: Method \[Thread\] \<Class ID\>
 
+**Log**
 ![image](https://github.com/XingdongYu/MethodLog/blob/master/art/log.png)
 
+**Logger**
 ![image](https://github.com/XingdongYu/MethodLog/blob/master/art/logger.png)
 
 关于Kotlin
