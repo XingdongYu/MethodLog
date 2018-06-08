@@ -4,7 +4,7 @@ MethodLog
 前言
 ---
 
-* 当应用的业务逻辑比较复杂时，我们可能会为因为方法的调用逻辑烦恼，且Debug远远没有Log来的直观。
+* 当应用的业务逻辑比较复杂时，我们经常会因为方法的调用逻辑烦恼，且Debug远远没有Log来的直观。
 * 用AspectJ实现日志的repo很多，却没有找到整体输出的。
 * 实现比较简单，但由于AspectJ的实现需要创建lib，建一个库可以方便在测试时使用。
 
@@ -14,24 +14,26 @@ MethodLog
 引入
 ---
 
-AspectJ插件直接用了Jake Wharton God [Hugo](https://github.com/JakeWharton/hugo) 库中的Plugin:
+AspectJ插件直接用了Jake Wharton God [Hugo](https://github.com/JakeWharton/hugo) 中的Plugin:
 
 ```groovy
 buildscript {
-  repositories {
-    maven { url 'https://jitpack.io' }
-  }
-
-  dependencies {
-    classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
-  }
+    dependencies {
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+    }
+}
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
 
 dependencies {
-  implementation 'com.github.XingdongYu:MethodLog:v1.0.0'
+    implementation 'com.github.XingdongYu:MethodLog:v1.0.0'
 }
 ```
 使用
