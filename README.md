@@ -19,7 +19,7 @@ AspectJ插件直接用了Jake Wharton God [Hugo](https://github.com/JakeWharton/
 ```groovy
 buildscript {
   repositories {
-    mavenCentral()
+    maven { url 'https://jitpack.io' }
   }
 
   dependencies {
@@ -29,6 +29,10 @@ buildscript {
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
+
+dependencies {
+  implementation 'com.github.XingdongYu:MethodLog:v1.0.0'
+}
 ```
 使用
 ---
