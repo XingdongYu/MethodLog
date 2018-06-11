@@ -33,11 +33,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
 
 dependencies {
-    implementation 'com.github.XingdongYu:MethodLog:v1.0.0'
+    implementation 'com.github.XingdongYu:MethodLog:v1.0.1'
 }
 ```
 使用
 ---
+[![](https://jitpack.io/v/XingdongYu/MethodLog.svg)](https://jitpack.io/#XingdongYu/MethodLog)
 
 Runtime期间可以通过 `LogConfig.get().enable()`启用Log，通过 `LogConfig.get().disable()`停用。默认开启。
 
