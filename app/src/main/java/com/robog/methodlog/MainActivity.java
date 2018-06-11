@@ -12,10 +12,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    public void onClick(View view) {
-        startActivity(new Intent(this, SecondActivity.class));
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

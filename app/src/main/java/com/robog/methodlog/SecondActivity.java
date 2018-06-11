@@ -25,4 +25,14 @@ public class SecondActivity extends AppCompatActivity {
     private void secondMethod() {
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

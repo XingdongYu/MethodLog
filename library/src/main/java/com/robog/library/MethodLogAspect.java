@@ -1,10 +1,7 @@
 package com.robog.library;
 
 import android.text.TextUtils;
-import android.util.Log;
-
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -14,6 +11,8 @@ import java.util.List;
 
 @Aspect
 public class MethodLogAspect {
+
+    private String mLastTarget = null;
 
     @Pointcut("execution(* *..*(..))")
     public void logMethod() {
@@ -27,19 +26,30 @@ public class MethodLogAspect {
         final LogConfig logConfig = LogConfig.get();
 
         if (logConfig.isEnable()) {
+
             final String targetName = String.valueOf(joinPoint.getTarget());
 
             if (!TextUtils.isEmpty(targetName) && !"null".equals(targetName)) {
 
-                // ID
-                final int index = targetName.indexOf("@");
-                final String targetId = index > -1 ? targetName.substring(index) : "";
+                // 获得当前类名
+                // 忽略ID
+                final String rawName = targetName.split("@")[0];
+                // 忽略引用
+                final String currentName = rawName.split("[$]")[0];
 
-                final StringBuilder stringBuilder = new StringBuilder();
-                final String methodName = joinPoint.getSignature().getName();
+                // 组装方法所在行
+                final StackTraceElement stackTrace = Thread.currentThread().getStackTrace()[3];
+                final int lineNumber = stackTrace.getLineNumber();
+                final String fileName = stackTrace.getFileName();
+                final StringBuilder sbCodeLine = new StringBuilder();
+                if (lineNumber >= 0) {
+                    sbCodeLine.append("(").append(fileName).append(":").append(lineNumber).append(")");
+                } else {
+                    sbCodeLine.append("(").append(fileName).append(")");
+                }
 
                 final MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-                String message = null;
+                final String methodName = signature.getName();
 
                 final int mode = logConfig.getMode();
                 final List<String> methodBlockList = logConfig.getMethodBlockList();
@@ -75,15 +85,14 @@ public class MethodLogAspect {
 
                     // 若屏蔽没用命中，则输出日志
                     if (!blockHit) {
-                        message = stringBuilder
-                                .append(signature.toLongString())
-                                .append(" [")
-                                .append(Thread.currentThread().getName())
-                                .append("]")
-                                .append(" <")
-                                .append(targetId)
-                                .append(">")
-                                .toString();
+
+                        if (!currentName.equals(mLastTarget)) {
+                            MethodLog.logClass(targetName);
+                            MethodLog.logMethod(signature.toLongString() + sbCodeLine.toString());
+                            mLastTarget = currentName;
+                        } else {
+                            MethodLog.logMethod(signature.toLongString() + sbCodeLine.toString());
+                        }
                     }
 
                 } else {
@@ -113,21 +122,17 @@ public class MethodLogAspect {
 
                     // 若选择命中，则输出日志
                     if (selectHit) {
-                        message = stringBuilder
-                                .append(signature.toLongString())
-                                .append(" [")
-                                .append(Thread.currentThread().getName())
-                                .append("]")
-                                .append(" <")
-                                .append(targetId)
-                                .append(">")
-                                .toString();
+
+                        if (!currentName.equals(mLastTarget)) {
+                            MethodLog.logClass(targetName);
+                            MethodLog.logMethod(signature.toLongString() + sbCodeLine.toString());
+                            mLastTarget = currentName;
+                        } else {
+                            MethodLog.logMethod(signature.toLongString() + sbCodeLine.toString());
+                        }
                     }
                 }
 
-                if (message != null) {
-                    logConfig.getLogDelegate().logMethodMessage(message);
-                }
             }
         }
 

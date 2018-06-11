@@ -17,11 +17,6 @@ public final class LogConfig {
     private boolean mEnable;
 
     /**
-     * 日志输出策略，可自定义
-     */
-    private LogDelegate mLogDelegate;
-
-    /**
      * 类屏蔽列表
      */
     private final List<String> mClassBlockList;
@@ -54,22 +49,10 @@ public final class LogConfig {
         // 屏蔽LogConfig
         mClassBlockList.add(LogConfig.class.getName());
         // 屏蔽LogDelegate，避免死循环
-        mClassBlockList.add(LogDelegate.class.getName());
+        mClassBlockList.add(MethodLog.class.getName());
 
         mLogMode = LogMode.BLOCK;
         mEnable = true;
-    }
-
-    public LogDelegate getLogDelegate() {
-        if (mLogDelegate == null) {
-            return LogDelegate.DEFAULT_LOG;
-        }
-        return mLogDelegate;
-    }
-
-    public LogConfig setLogDelegate(LogDelegate logDelegate) {
-        this.mLogDelegate = logDelegate;
-        return this;
     }
 
     public LogConfig mode(@LogMode.Check int mode) {
@@ -138,6 +121,10 @@ public final class LogConfig {
         mMethodBlockList.addAll(Arrays.asList(methods));
 
         return this;
+    }
+
+    public void clear() {
+        MethodLog.sFirst = true;
     }
 
     public List<String> getClassBlockList() {

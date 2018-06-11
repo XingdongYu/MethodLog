@@ -51,64 +51,25 @@ public class LogApplication extends Application {
      */
     {
         final LogConfig logConfig = LogConfig.get();
-        // 配置相关
+        // 屏蔽类
+        logConfig.mode(LogMode.BLOCK).blockClass(MainActivity.class, SecondActivity.class);
+        // 选择类
+        logConfig.mode(LogMode.SELECT).selectClass(MainActivity.class, SecondActivity.class);
+
+        // 屏蔽方法
+        logConfig.blockMethod("onCreate");
     }
 
 }
-```
-
-过滤配置：
-
-```java
-// 屏蔽类
-logConfig.mode(LogMode.BLOCK).blockClass(MainActivity.class, SecondActivity.class);
-// 选择类
-logConfig.mode(LogMode.SELECT).selectClass(MainActivity.class, SecondActivity.class);
-
-// 屏蔽方法
-logConfig.blockMethod("onCreate");
 ```
 LogMode.BLOCK和LogMode.SELECT互斥，默认模式为LogMode.BLOCK，屏蔽method不受LogMode约束。
 若blockMethod参数为"on"，则会屏蔽所有以"on"开头的方法。
 
-通过设置LogDelegate自定义Log:
-
-```java
-logConfig.setLogDelegate(new LogDelegate() {
-    @Override
-    public void logMethodMessage(String message) {
-        Logger.d(message);
-    }
-}).blockMethod("logMethodMessage");
-```
-**在LogDelegate匿名内部类后须屏蔽"logMethodMessage"。**
-
-也可以在外部新建LogDelegate接口实现类:
-
-```java
-public class CustomLog implements LogDelegate {
-    @Override
-    public void logMethodMessage(String message) {
-        Logger.d(message);
-    }
-}
-
-// Application中
-logConfig.setLogDelegate(new CustomLog())
-        .blockClass(CustomLogDelegate.class);
-```
-**可直接屏蔽"CustomLogDelegate.class"。**
-
 输出
 ----
+日志的输出借鉴了[logger](https://github.com/orhanobut/logger)
 
-输出格式: Method \[Thread\] \<Class ID\>
-
-**Log**
 ![image](https://github.com/XingdongYu/MethodLog/blob/master/art/log.png)
-
-**Logger**
-![image](https://github.com/XingdongYu/MethodLog/blob/master/art/logger.png)
 
 关于Kotlin
 --------
