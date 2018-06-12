@@ -38,8 +38,11 @@ public class MethodLogAspect {
                 // 忽略引用
                 final String currentName = rawName.split("[$]")[0];
 
-                if (currentName.equals(LogConfig.class.getName()) || currentName.equals(MethodLog.class.getName())
+                // 若为lib中的类，不做处理
+                if (currentName.equals(LogConfig.class.getName())
+                        || currentName.equals(MethodLog.class.getName())
                         || currentName.equals(getClass().getName())) {
+
                     joinPoint.proceed();
                     return;
                 }
@@ -124,6 +127,7 @@ public class MethodLogAspect {
         final LogConfig logConfig = LogConfig.get();
         final List<String> classSelectList = logConfig.getClassSelectList();
         final List<String> methodBlockList = logConfig.getMethodBlockList();
+
         boolean selectHit = false;
 
         if (classSelectList != null) {
