@@ -19,7 +19,7 @@ public final class LogConfig {
     /**
      * 类屏蔽列表
      */
-    private final List<String> mClassBlockList;
+    private List<String> mClassBlockList;
 
     /**
      * 类选择列表
@@ -45,11 +45,6 @@ public final class LogConfig {
     }
 
     private LogConfig() {
-        mClassBlockList = new ArrayList<>();
-        // 屏蔽LogConfig
-        mClassBlockList.add(LogConfig.class.getName());
-        // 屏蔽LogDelegate，避免死循环
-        mClassBlockList.add(MethodLog.class.getName());
 
         mLogMode = LogMode.BLOCK;
         mEnable = true;
@@ -60,7 +55,7 @@ public final class LogConfig {
         return this;
     }
 
-    public @LogMode.Check int getMode() {
+    public int getMode() {
         return mLogMode;
     }
 
@@ -84,6 +79,8 @@ public final class LogConfig {
             return this;
         }
 
+        checkClassBlockList();
+
         for (Class<?> cls : clz) {
             mClassBlockList.add(cls.getName());
         }
@@ -95,6 +92,8 @@ public final class LogConfig {
         if (mLogMode == LogMode.SELECT) {
             return this;
         }
+
+        checkClassBlockList();
 
         mClassBlockList.addAll(Arrays.asList(clz));
 
@@ -137,6 +136,12 @@ public final class LogConfig {
 
     public List<String> getMethodBlockList() {
         return mMethodBlockList;
+    }
+
+    private void checkClassBlockList() {
+        if (mClassBlockList == null) {
+            mClassBlockList = new ArrayList<>();
+        }
     }
 
     private void checkClassSelectList() {
