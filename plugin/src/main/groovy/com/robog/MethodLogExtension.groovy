@@ -8,6 +8,6 @@ class MethodLogExtension {
   }
 
   def getEnabled() {
-    return enabled;
+    return enabled
   }
 }

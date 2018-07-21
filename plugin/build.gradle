@@ -13,32 +13,83 @@ dependencies {
 repositories {
     mavenCentral()
 }
-uploadArchives {
+
+// 本地
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri('../repo'))
+//            pom.groupId = 'com.robog.methodlog'
+//            pom.artifactId = 'methodlog-plugin'
+//            pom.version = '1.0.1'
+//        }
+//    }
+//}
+
+group = "com.robog.methodlog"
+version = "1.0.1"
+project.archivesBaseName = "methodlog-plugin"
+
+def baseUrl = 'https://github.com/XingdongYu/MethodLog'
+def siteUrl = baseUrl
+def gitUrl = "${baseUrl}/tree/master/plugin"
+def issueUrl = "${baseUrl}/issues"
+
+install {
     repositories {
-        mavenDeployer {
-            repository(url: uri('../repo'))
-            pom.groupId = 'com.robog.methodlog'
-            pom.artifactId = 'methodlog-plugin'
-            pom.version = '1.0.1'
+        mavenInstaller {
+            // This generates POM.xml with proper paramters
+            pom.project {
+
+                //添加项目描述
+                name 'Plugin for MethodLog'
+                url siteUrl
+                groupId = 'com.robog.methodlog'
+                artifactId = 'methodlog-plugin'
+                version = '1.0.1'
+
+                //设置开源证书信息
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                //添加开发者信息
+                developers {
+                    developer {
+                        name 'RoboG'
+                        email 'kobeyxd@gmail.com'
+                    }
+                }
+
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
         }
+
     }
 }
 
-def siteUrl = 'https://github.com/XingdongYu/MethodLog'
-
 bintray {
-//    user = BINTRAY_USER
-//    key = BINTRAY_KEY
+    user = BINTRAY_USER
+    key = BINTRAY_KEY
 
     configurations = ['archives']
+    configurations = ['archives']
     pkg {
-        userOrg = 'robog'
         repo = 'Maven'
         name = 'MethodLogPlugin'
-        desc = 'MethodLog Plugin'
+        desc = 'Plugin for MethodLog'
         websiteUrl = siteUrl
-        labels = ['gradle', 'plugin']
-        licenses = ['Apache-2.0']
+        vcsUrl = gitUrl
+        issueTrackerUrl = issueUrl
+        licenses = ["Apache-2.0"]
+        labels = 'Groovy'
+        publicDownloadNumbers = true
         publish = true
     }
 }

@@ -14,27 +14,22 @@ MethodLog将所有的方法当作切面，在日志输出时进行统一过滤�
 引入
 ---
 
-AspectJ插件直接用了Jake Wharton God [Hugo](https://github.com/JakeWharton/hugo) 中的Plugin:
+延用了Jake Wharton God [Hugo](https://github.com/JakeWharton/hugo) 中的Plugin。由于引入库不同，稍作了修改。
 
 ```groovy
 buildscript {
-    dependencies {
-        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
-    }
-}
-allprojects {
     repositories {
         ...
-        maven { url 'https://jitpack.io' }
+        maven {
+            url "https://dl.bintray.com/robog/Maven"
+        }
+    }
+    dependencies {
+        classpath 'com.robog.methodlog:methodlog-plugin:1.0.1'
     }
 }
 
-apply plugin: 'com.android.application'
-apply plugin: 'com.jakewharton.hugo'
-
-dependencies {
-    implementation 'com.github.XingdongYu:MethodLog:v1.0.1'
-}
+apply plugin: 'com.robog.methodlog'
 ```
 使用
 ---

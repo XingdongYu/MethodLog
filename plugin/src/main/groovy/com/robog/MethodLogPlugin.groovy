@@ -32,10 +32,17 @@ class MethodLogPlugin implements Plugin<Project> {
             implementation 'com.robog:MethodLog:1.0.1'
         }
 
-        project.extensions.create('method', MethodLogExtension)
+        // 不知道为什么会Could not find，待解决
+        project.extensions.create('MethodLog', MethodLogExtension)
 
         variants.all { variant ->
-
+            if (!variant.buildType.isDebuggable()) {
+                log.debug("Skipping non-debuggable build type '${variant.buildType.name}'.")
+                return
+            } else if (!project.MethodLog.enabled) {
+                log.debug("MethodLog is not disabled.")
+                return
+            }
             JavaCompile javaCompile = variant.javaCompile
             javaCompile.doLast {
                 String[] args = [
@@ -57,16 +64,16 @@ class MethodLogPlugin implements Plugin<Project> {
                         case IMessage.ERROR:
                         case IMessage.FAIL:
                             log.error message.message, message.thrown
-                            break;
+                            break
                         case IMessage.WARNING:
                             log.warn message.message, message.thrown
-                            break;
+                            break
                         case IMessage.INFO:
                             log.info message.message, message.thrown
-                            break;
+                            break
                         case IMessage.DEBUG:
                             log.debug message.message, message.thrown
-                            break;
+                            break
                     }
                 }
             }
