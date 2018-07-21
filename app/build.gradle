@@ -1,9 +1,7 @@
 
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.jakewharton.hugo'
-
+//apply plugin: 'com.robog.methodlog'
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -24,7 +22,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.41'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'

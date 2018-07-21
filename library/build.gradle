@@ -1,10 +1,19 @@
-
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+def siteUrl = 'https://github.com/XingdongYu/MethodLog'
+publish {
+    userOrg = 'robog'
+    repoName = 'MethodLog'
+    groupId = 'com.robog'
+    artifactId = 'MethodLog'
+    publishVersion = '1.0.1'
+    desc = '一个可以查看方法调用顺序的库'
+    website = siteUrl
+}
 
 android {
     compileSdkVersion 27
-
-
 
     defaultConfig {
         minSdkVersion 19
