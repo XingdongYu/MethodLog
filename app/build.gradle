@@ -1,7 +1,7 @@
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.jakewharton.hugo'
-//apply plugin: 'com.robog.methodlog'
+//apply plugin: 'com.jakewharton.hugo'
+apply plugin: 'com.robog.methodlog'
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -27,6 +27,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(':library')
-//    implementation 'com.github.XingdongYu:MethodLog:v1.0.1'
+//    implementation project(':library')
+//    implementation 'com.robog:MethodLog:1.0.1'
 }

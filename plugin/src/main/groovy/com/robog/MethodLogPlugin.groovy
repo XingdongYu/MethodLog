@@ -27,27 +27,14 @@ class MethodLogPlugin implements Plugin<Project> {
             variants = project.android.libraryVariants
         }
 
-//        project.dependencies {
-//            debugCompile 'com.jakewharton.hugo:hugo-runtime:1.2.2-SNAPSHOT'
-//            // TODO this should come transitively
-//            debugCompile 'org.aspectj:aspectjrt:1.8.6'
-//            compile 'com.jakewharton.hugo:hugo-annotations:1.2.2-SNAPSHOT'
-//        }
         project.dependencies {
-            debugCompile 'org.aspectj:aspectjrt:1.8.6'
-            compile 'com.github.XingdongYu:MethodLog:v1.0.1'
+            debugImplementation 'org.aspectj:aspectjrt:1.8.6'
+            implementation 'com.robog:MethodLog:1.0.1'
         }
 
         project.extensions.create('method', MethodLogExtension)
 
         variants.all { variant ->
-            if (!variant.buildType.isDebuggable()) {
-                log.debug("Skipping non-debuggable build type '${variant.buildType.name}'.")
-                return;
-            } else if (!project.hugo.enabled) {
-                log.debug("Hugo is not disabled.")
-                return;
-            }
 
             JavaCompile javaCompile = variant.javaCompile
             javaCompile.doLast {

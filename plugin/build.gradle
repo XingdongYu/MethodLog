@@ -1,6 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
-//apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
 
 dependencies {
     compile gradleApi()
@@ -18,7 +19,26 @@ uploadArchives {
             repository(url: uri('../repo'))
             pom.groupId = 'com.robog.methodlog'
             pom.artifactId = 'methodlog-plugin'
-            pom.version = '1.0.0'
+            pom.version = '1.0.1'
         }
+    }
+}
+
+def siteUrl = 'https://github.com/XingdongYu/MethodLog'
+
+bintray {
+//    user = BINTRAY_USER
+//    key = BINTRAY_KEY
+
+    configurations = ['archives']
+    pkg {
+        userOrg = 'robog'
+        repo = 'Maven'
+        name = 'MethodLogPlugin'
+        desc = 'MethodLog Plugin'
+        websiteUrl = siteUrl
+        labels = ['gradle', 'plugin']
+        licenses = ['Apache-2.0']
+        publish = true
     }
 }
