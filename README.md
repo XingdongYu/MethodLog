@@ -18,12 +18,6 @@ MethodLog将所有的方法当作切面，在日志输出时进行统一过滤�
 
 ```groovy
 buildscript {
-    repositories {
-        ...
-        maven {
-            url "https://dl.bintray.com/robog/Maven"
-        }
-    }
     dependencies {
         classpath 'com.robog.methodlog:methodlog-plugin:1.0.1'
     }
