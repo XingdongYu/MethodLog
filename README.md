@@ -25,6 +25,13 @@ buildscript {
 
 apply plugin: 'com.robog.methodlog'
 ```
+可通过如下方式禁用:
+```groovy
+MethodLog {
+    setEnabled(false)
+}
+```
+
 使用
 ---
 [![](https://jitpack.io/v/XingdongYu/MethodLog.svg)](https://jitpack.io/#XingdongYu/MethodLog)
