@@ -38,5 +38,9 @@ captures/
 *.iml
 .idea/workspace.xml
 .idea/libraries
-
 # Keystore files
+app/libs/
+library/libs/
+library/src/main/res/drawable/
+plugin/libs/
+/repo/*

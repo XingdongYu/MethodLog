@@ -21,7 +21,7 @@ repositories {
 //            repository(url: uri('../repo'))
 //            pom.groupId = 'com.robog.methodlog'
 //            pom.artifactId = 'methodlog-plugin'
-//            pom.version = '1.0.1'
+//            pom.version = '1.0.2'
 //        }
 //    }
 //}

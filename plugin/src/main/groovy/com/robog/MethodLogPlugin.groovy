@@ -32,7 +32,6 @@ class MethodLogPlugin implements Plugin<Project> {
             implementation 'com.robog:MethodLog:1.0.1'
         }
 
-        // 不知道为什么会Could not find，待解决
         project.extensions.create('MethodLog', MethodLogExtension)
 
         variants.all { variant ->
